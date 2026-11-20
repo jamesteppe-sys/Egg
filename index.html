@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shwe Nyi Naung Egg Shop</title>
+  <style>
+    :root {
+      --bg: #f1f5f9;
+      --surface: #ffffff;
+      --surface-subtle: #f8fafc;
+      --surface-total: #fffbeb;
+      --border: #e2e8f0;
+      --border-strong: #cbd5e1;
+      --border-amber: #f59e0b;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --accent: #d97706;
+      --accent-dark: #b45309;
+      --accent-soft: #fef3c7;
+      --success: #16a34a;
+      --shadow-card: 0 4px 20px -2px rgba(15, 23, 42, 0.06);
+      --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+      --radius-xl: 18px;
+      --radius-lg: 14px;
+      --radius-md: 10px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0b1120;
+        --surface: #111827;
+        --surface-subtle: #1e293b;
+        --surface-total: #271f0f;
+        --border: #1f2937;
+        --border-strong: #334155;
+        --border-amber: #d97706;
+        --text-primary: #f8fafc;
+        --text-secondary: #cbd5e1;
+        --text-muted: #94a3b8;
+        --accent: #f59e0b;
+        --accent-dark: #fbbf24;
+        --accent-soft: rgba(245, 158, 11, 0.16);
+        --success: #22c55e;
+        --shadow-card: 0 8px 28px -4px rgba(0, 0, 0, 0.5);
+        --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.45;
+      padding: 16px;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 680px;
+      margin: 6px auto 36px;
+    }
+
+    /* Clean Header */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding: 0 2px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: var(--accent-soft);
+      border: 1.5px solid var(--border-amber);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .header h1 {
+      font-size: 1.32rem;
+      font-weight: 850;
+      letter-spacing: -0.025em;
+      color: var(--text-primary);
+      line-height: 1.2;
+    }
+
+    .header p {
+      font-size: 0.84rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .header p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .reset-btn {
+      background: var(--surface);
+      border: 1px solid var(--border-strong);
+      color: var(--text-secondary);
+      padding: 8px 14px;
+      border-radius: var(--radius-md);
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .reset-btn:hover {
+      color: var(--text-primary);
+      border-color: var(--text-muted);
+    }
+
+    /* Main Panel */
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-card);
+      padding: 22px;
+      margin-bottom: 16px;
+    }
+
+    /* Step 1 & 2 Side-by-Side Inputs */
+    .inputs-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    @media (max-width: 540px) {
+      .inputs-row {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+      .panel {
+        padding: 18px;
+      }
+    }
+
+    .input-card {
+      background: var(--surface-subtle);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 14px 16px;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .input-card:focus-within {
+      border-color: var(--border-amber);
+      box-shadow: 0 0 0 3px var(--accent-soft);
+      background: var(--surface);
+    }
+
+    .step-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+    }
+
+    .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 24px;
+      height: 24px;
+      padding: 0 7px;
+      border-radius: 7px;
+      background: var(--accent-soft);
+      color: var(--accent-dark);
+      font-size: 0.8rem;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .field-wrap {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .big-input {
+      width: 100%;
+      border: none;
+      background: transparent;
+      font-size: 1.5rem;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      color: var(--text-primary);
+      outline: none;
+      min-width: 0;
+    }
+
+    .big-input::placeholder {
+      color: var(--text-muted);
+      font-weight: 500;
+      opacity: 0.65;
+    }
+
+    .unit-tag {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* Step 3 Total Highlight Bar */
+    .total-bar {
+      background: var(--surface-total);
+      border: 2px solid var(--border-amber);
+      border-radius: var(--radius-lg);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .total-left {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .total-left .step-label {
+      margin-bottom: 0;
+      font-size: 1rem;
+    }
+
+    .total-equation {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      padding-left: 32px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .total-right {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin-left: auto;
+    }
+
+    .total-amount {
+      font-size: 1.9rem;
+      font-weight: 900;
+      color: var(--accent-dark);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.02em;
+    }
+
+    .total-unit {
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+    }
+
+    /* Step 4 Header & Rounding Toggle */
+    .sale-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .sale-top .step-label {
+      margin-bottom: 0;
+      font-size: 1.02rem;
+    }
+
+    .segmented {
+      display: inline-flex;
+      background: var(--surface-subtle);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-md);
+      padding: 3px;
+    }
+
+    .segmented button {
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 6px 11px;
+      border-radius: 7px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .segmented button.active {
+      background: var(--surface);
+      color: var(--text-primary);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* 2-Column Grade Cards */
+    .grades-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    @media (max-width: 540px) {
+      .grades-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .grade-card {
+      background: var(--surface-subtle);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 10px;
+      transition: border-color 0.15s ease, background-color 0.15s ease;
+    }
+
+    .grade-card:hover {
+      border-color: var(--border-strong);
+      background: var(--surface);
+    }
+
+    .grade-name {
+      font-size: 0.96rem;
+      font-weight: 800;
+      color: var(--text-secondary);
+      font-variant-numeric: tabular-nums;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .grade-name span {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2px 7px;
+      border-radius: 6px;
+      background: var(--accent-soft);
+      color: var(--accent-dark);
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    .hero-price {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+
+    .hero-price strong {
+      font-size: 2.05rem;
+      font-weight: 900;
+      color: var(--text-primary);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.025em;
+      line-height: 1.05;
+    }
+
+    .hero-price span {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    /* 4.5 Other Size Full-Width Card */
+    .custom-card {
+      grid-column: 1 / -1;
+      background: var(--surface-subtle);
+      border: 1.5px solid var(--border-strong);
+      border-radius: var(--radius-lg);
+      padding: 18px 20px;
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 18px;
+      align-items: center;
+    }
+
+    @media (max-width: 540px) {
+      .custom-card {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+    }
+
+    .custom-input-box {
+      background: var(--surface);
+      border: 1.5px solid var(--border-strong);
+      border-radius: var(--radius-md);
+      padding: 10px 14px;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 10px;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .custom-input-box:focus-within {
+      border-color: var(--border-amber);
+      box-shadow: 0 0 0 3px var(--accent-soft);
+    }
+
+    .custom-kg-field {
+      width: 100%;
+      border: none;
+      background: transparent;
+      font-size: 1.4rem;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      color: var(--text-primary);
+      outline: none;
+      min-width: 0;
+    }
+
+    .custom-kg-field::placeholder {
+      color: var(--text-muted);
+      font-weight: 500;
+      font-size: 1.05rem;
+      opacity: 0.7;
+    }
+
+    .custom-prompt {
+      margin-top: 6px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      min-height: 1.1em;
+    }
+
+    .custom-prompt.error {
+      color: #dc2626;
+    }
+
+    .custom-result-side {
+      border-left: 1px solid var(--border-strong);
+      padding-left: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    @media (max-width: 540px) {
+      .custom-result-side {
+        border-left: none;
+        border-top: 1px solid var(--border);
+        padding-left: 0;
+        padding-top: 14px;
+      }
+    }
+
+    .custom-input-box {
+      background: var(--surface-subtle);
+      border: 1.5px solid var(--border-strong);
+      border-radius: var(--radius-md);
+      padding: 10px 14px;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 8px;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .custom-input-box:focus-within {
+      border-color: var(--border-amber);
+      box-shadow: 0 0 0 3px var(--accent-soft);
+      background: var(--surface);
+    }
+
+    .custom-kg-field {
+      width: 100%;
+      border: none;
+      background: transparent;
+      font-size: 1.35rem;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      color: var(--text-primary);
+      outline: none;
+      min-width: 0;
+    }
+
+    .custom-kg-field::placeholder {
+      color: var(--text-muted);
+      font-weight: 500;
+      font-size: 1.05rem;
+      opacity: 0.75;
+    }
+
+    .custom-prompt {
+      margin-top: 6px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .custom-result-side {
+      border-left: 1px solid var(--border);
+      padding-left: 18px;
+    }
+
+    @media (max-width: 540px) {
+      .custom-result-side {
+        border-left: none;
+        border-top: 1px solid var(--border);
+        padding-left: 0;
+        padding-top: 12px;
+      }
+    }
+
+    /* Footer Actions & Collapsible Formula */
+    .footer-actions {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .copy-btn {
+      flex: 1;
+      padding: 15px 20px;
+      border: none;
+      border-radius: var(--radius-lg);
+      background: var(--accent);
+      color: #ffffff;
+      font-size: 0.98rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: var(--shadow-sm);
+      transition: background 0.15s ease, transform 0.1s ease;
+    }
+
+    .copy-btn:hover {
+      background: var(--accent-dark);
+    }
+
+    .copy-btn:active {
+      transform: scale(0.99);
+    }
+
+    .copy-btn.copied {
+      background: var(--success);
+      color: #ffffff;
+    }
+
+    details.formula-drawer {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    details.formula-drawer summary {
+      list-style: none;
+      padding: 13px 18px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
+    }
+
+    details.formula-drawer summary::-webkit-details-marker {
+      display: none;
+    }
+
+    details.formula-drawer summary:hover {
+      color: var(--text-primary);
+    }
+
+    .chevron {
+      transition: transform 0.2s ease;
+    }
+
+    details[open] .chevron {
+      transform: rotate(180deg);
+    }
+
+    .formula-body {
+      padding: 14px 18px 18px;
+      border-top: 1px solid var(--border);
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .formula-code {
+      display: block;
+      margin-top: 8px;
+      padding: 10px 12px;
+      border-radius: var(--radius-md);
+      background: var(--surface-subtle);
+      border: 1px solid var(--border);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.78rem;
+      color: var(--text-primary);
+      line-height: 1.65;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--text-primary);
+      color: var(--bg);
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.25s ease;
+      z-index: 50;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="brand">
+        <div class="brand-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22c4.97 0 8-3.58 8-8.5C20 8.5 16.2 2 12 2S4 8.5 4 13.5C4 18.42 7.03 22 12 22z"/>
+          </svg>
+        </div>
+        <div>
+          <h1>Shwe Nyi Naung Egg Shop</h1>
+          <p>Egg Sale Price Calculator</p>
+        </div>
+      </div>
+      <button type="button" class="reset-btn" id="resetBtn">Reset</button>
+    </header>
+
+    <!-- Steps 1, 2 & 3 -->
+    <section class="panel" aria-label="Cost Inputs and Total Price">
+      <div class="inputs-row">
+        <!-- 1. Farm Price -->
+        <div class="input-card">
+          <label class="step-label" for="farmPriceInput">
+            <span class="step-num">1</span>
+            <span>Farm Price</span>
+          </label>
+          <div class="field-wrap">
+            <input
+              type="number"
+              id="farmPriceInput"
+              class="big-input"
+              inputmode="decimal"
+              min="0"
+              step="any"
+              placeholder="6000"
+              autocomplete="off"
+            />
+            <span class="unit-tag">MMK / Viss</span>
+          </div>
+        </div>
+
+        <!-- 2. Egg Shop added -->
+        <div class="input-card">
+          <label class="step-label" for="shopAddedInput">
+            <span class="step-num">2</span>
+            <span>Egg Shop added</span>
+          </label>
+          <div class="field-wrap">
+            <input
+              type="number"
+              id="shopAddedInput"
+              class="big-input"
+              inputmode="decimal"
+              min="0"
+              step="any"
+              placeholder="500"
+              autocomplete="off"
+            />
+            <span class="unit-tag">MMK / Viss</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Total price -->
+      <div class="total-bar" aria-live="polite">
+        <div class="total-left">
+          <div class="step-label">
+            <span class="step-num">3</span>
+            <span>Total price</span>
+          </div>
+          <div class="total-equation" id="totalEquationText">Total price = Farm price + Egg Shop added</div>
+        </div>
+        <div class="total-right">
+          <span class="total-amount" id="totalPriceDisplay">0</span>
+          <span class="total-unit">MMK / Viss</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Step 4: Sale Price -->
+    <section class="panel" aria-label="Sale price by crate weight">
+      <div class="sale-top">
+        <div class="step-label">
+          <span class="step-num">4</span>
+          <span>Sale price</span>
+        </div>
+        <div class="segmented" id="roundGroup" role="group" aria-label="Per-egg rounding">
+          <button type="button" class="active" data-round="exact">Exact (.00)</button>
+          <button type="button" data-round="1">Nearest 1</button>
+          <button type="button" data-round="5">Nearest 5</button>
+        </div>
+      </div>
+
+      <div class="grades-grid" aria-live="polite">
+        <!-- 4.1 18Kg price -->
+        <div class="grade-card">
+          <div class="grade-name"><span>4.1</span> 18Kg price</div>
+          <div class="hero-price">
+            <strong id="price18">0.00</strong>
+            <span>MMK / egg</span>
+          </div>
+        </div>
+
+        <!-- 4.2 19Kg price -->
+        <div class="grade-card">
+          <div class="grade-name"><span>4.2</span> 19Kg price</div>
+          <div class="hero-price">
+            <strong id="price19">0.00</strong>
+            <span>MMK / egg</span>
+          </div>
+        </div>
+
+        <!-- 4.3 20Kg price -->
+        <div class="grade-card">
+          <div class="grade-name"><span>4.3</span> 20Kg price</div>
+          <div class="hero-price">
+            <strong id="price20">0.00</strong>
+            <span>MMK / egg</span>
+          </div>
+        </div>
+
+        <!-- 4.4 21 Kg price -->
+        <div class="grade-card">
+          <div class="grade-name"><span>4.4</span> 21 Kg price</div>
+          <div class="hero-price">
+            <strong id="price21">0.00</strong>
+            <span>MMK / egg</span>
+          </div>
+        </div>
+
+        <!-- 4.5 Other size -->
+        <div class="custom-card">
+          <div>
+            <label class="grade-name" for="customKgInput"><span>4.5</span> Other size</label>
+            <div class="custom-input-box">
+              <input
+                type="number"
+                id="customKgInput"
+                class="custom-kg-field"
+                inputmode="decimal"
+                min="0"
+                step="any"
+                placeholder="22"
+                autocomplete="off"
+              />
+              <span class="unit-tag">Kg</span>
+            </div>
+            <div class="custom-prompt" id="customPrompt"></div>
+          </div>
+
+          <div class="custom-result-side">
+            <div class="hero-price">
+              <strong id="priceCustom">0.00</strong>
+              <span>MMK / egg</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Copy Summary Button -->
+    <div class="footer-actions">
+      <button type="button" class="copy-btn" id="copyBtn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+        <span id="copyBtnText">Copy Summary</span>
+      </button>
+    </div>
+
+    <!-- Collapsible Formula Details -->
+    <details class="formula-drawer">
+      <summary>
+        <span>Formula Details</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </summary>
+      <div class="formula-body">
+        <div><strong>Total price</strong> = Farm Price + Egg Shop added</div>
+        <div><strong>Sale price per egg</strong> formula for any crate weight in Kg:</div>
+        <code class="formula-code">
+          Sale price = ((Kg - 1.7) / 1.62) * Total price / 300<br />
+          4.1 18Kg price = ((18 - 1.7) / 1.62) * Total price / 300<br />
+          4.2 19Kg price = ((19 - 1.7) / 1.62) * Total price / 300<br />
+          4.3 20Kg price = ((20 - 1.7) / 1.62) * Total price / 300<br />
+          4.4 21 Kg price = ((21 - 1.7) / 1.62) * Total price / 300<br />
+          4.5 Other size = ((CustomKg - 1.7) / 1.62) * Total price / 300
+        </code>
+      </div>
+    </details>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">Copied!</div>
+
+  <script>
+    (function () {
+      const TARE_KG = 1.7;
+      const KG_PER_VISS = 1.62;
+      const EGGS_PER_CASE = 300;
+      const FIXED_GRADES = [18, 19, 20, 21];
+
+      let roundMode = 'exact';
+      let latestState = null;
+
+      const farmPriceInput = document.getElementById('farmPriceInput');
+      const shopAddedInput = document.getElementById('shopAddedInput');
+      const customKgInput = document.getElementById('customKgInput');
+
+      const totalPriceDisplay = document.getElementById('totalPriceDisplay');
+      const totalEquationText = document.getElementById('totalEquationText');
+      const customPrompt = document.getElementById('customPrompt');
+
+      const priceEls = {
+        18: document.getElementById('price18'),
+        19: document.getElementById('price19'),
+        20: document.getElementById('price20'),
+        21: document.getElementById('price21'),
+        custom: document.getElementById('priceCustom')
+      };
+
+      const roundButtons = Array.from(document.querySelectorAll('#roundGroup button'));
+      const resetBtn = document.getElementById('resetBtn');
+      const copyBtn = document.getElementById('copyBtn');
+      const copyBtnText = document.getElementById('copyBtnText');
+      const toast = document.getElementById('toast');
+
+      function parseNonNegative(el) {
+        if (!el) return 0;
+        const raw = String(el.value ?? '').trim();
+        if (raw === '') return 0;
+        const num = Number(raw);
+        return Number.isFinite(num) && num >= 0 ? num : 0;
+      }
+
+      function formatInt(val) {
+        if (!Number.isFinite(val) || val <= 0) return '0';
+        return Math.round(val).toLocaleString('en-US');
+      }
+
+      function roundValue(rawVal, mode) {
+        if (!Number.isFinite(rawVal) || rawVal <= 0) return 0;
+        if (mode === 'exact') return Number(rawVal.toFixed(2));
+        const step = Number(mode);
+        if (!Number.isFinite(step) || step <= 0) return rawVal;
+        return Math.round(rawVal / step) * step;
+      }
+
+      function formatPerEgg(val, mode) {
+        const safe = Number.isFinite(val) && val > 0 ? val : 0;
+        if (mode === 'exact') {
+          return safe.toLocaleString('en-US', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+          });
+        }
+        return Math.round(safe).toLocaleString('en-US');
+      }
+
+      function calcPerEgg(grossKg, totalPrice) {
+        if (!Number.isFinite(grossKg) || grossKg <= TARE_KG) return 0;
+        if (!Number.isFinite(totalPrice) || totalPrice <= 0) return 0;
+        const raw = (((grossKg - TARE_KG) / KG_PER_VISS) * totalPrice) / EGGS_PER_CASE;
+        return roundValue(raw, roundMode);
+      }
+
+      function showToast(message) {
+        toast.textContent = message;
+        toast.classList.add('show');
+        clearTimeout(showToast._timer);
+        showToast._timer = setTimeout(() => toast.classList.remove('show'), 2000);
+      }
+
+      function updateAll() {
+        const farmPrice = parseNonNegative(farmPriceInput);
+        const shopAdded = parseNonNegative(shopAddedInput);
+        const totalPrice = farmPrice + shopAdded;
+
+        totalPriceDisplay.textContent = formatInt(totalPrice);
+        totalEquationText.textContent =
+          farmPrice > 0 || shopAdded > 0
+            ? `Total price = Farm price + Egg Shop added (${formatInt(farmPrice)} + ${formatInt(shopAdded)})`
+            : 'Total price = Farm price + Egg Shop added';
+
+        const gradePrices = {};
+        FIXED_GRADES.forEach((kg) => {
+          const val = calcPerEgg(kg, totalPrice);
+          gradePrices[kg] = val;
+          if (priceEls[kg]) {
+            priceEls[kg].textContent = formatPerEgg(val, roundMode);
+          }
+        });
+
+        const rawCustomStr = String(customKgInput ? customKgInput.value : '').trim();
+        const rawCustomKg = rawCustomStr === '' ? NaN : Number(rawCustomStr);
+        const hasValidCustom = Number.isFinite(rawCustomKg) && rawCustomKg > TARE_KG;
+        const customPrice = hasValidCustom ? calcPerEgg(rawCustomKg, totalPrice) : 0;
+
+        if (priceEls.custom) {
+          priceEls.custom.textContent = formatPerEgg(customPrice, roundMode);
+        }
+
+        if (rawCustomStr !== '' && (!Number.isFinite(rawCustomKg) || rawCustomKg <= TARE_KG)) {
+          customPrompt.textContent = 'Enter a weight greater than 1.7 Kg';
+          customPrompt.classList.add('error');
+        } else {
+          customPrompt.textContent = '';
+          customPrompt.classList.remove('error');
+        }
+
+        latestState = {
+          farmPrice,
+          shopAdded,
+          totalPrice,
+          gradePrices,
+          hasValidCustom,
+          customKg: hasValidCustom ? rawCustomKg : 0,
+          customPrice
+        };
+      }
+
+      function bindEvents() {
+        [farmPriceInput, shopAddedInput, customKgInput].forEach((input) => {
+          if (!input) return;
+          input.addEventListener('input', updateAll);
+          input.addEventListener('change', updateAll);
+        });
+
+        roundButtons.forEach((btn) => {
+          const onSelectRound = () => {
+            const nextMode = btn.getAttribute('data-round');
+            if (!nextMode) return;
+            roundMode = nextMode;
+            roundButtons.forEach((b) => b.classList.toggle('active', b === btn));
+            updateAll();
+          };
+          btn.addEventListener('click', onSelectRound);
+          btn.addEventListener('change', onSelectRound);
+        });
+
+        if (resetBtn) {
+          resetBtn.addEventListener('click', () => {
+            if (farmPriceInput) farmPriceInput.value = '';
+            if (shopAddedInput) shopAddedInput.value = '';
+            if (customKgInput) customKgInput.value = '';
+            roundMode = 'exact';
+            roundButtons.forEach((b) => b.classList.toggle('active', b.getAttribute('data-round') === 'exact'));
+            updateAll();
+            if (farmPriceInput) farmPriceInput.focus();
+            showToast('Cleared');
+          });
+        }
+
+        if (copyBtn) {
+          copyBtn.addEventListener('click', () => {
+            updateAll();
+            const d = latestState;
+            const fmt = (v) => formatPerEgg(v, roundMode);
+
+            const lines = [
+              'Shwe Nyi Naung Egg Shop',
+              '-----------------------',
+              `1. Farm Price: ${formatInt(d.farmPrice)} MMK`,
+              `2. Egg Shop added: ${formatInt(d.shopAdded)} MMK`,
+              `3. Total price: ${formatInt(d.totalPrice)} MMK`,
+              '4. Sale price:',
+              `   4.1 18Kg price: ${fmt(d.gradePrices[18])} MMK`,
+              `   4.2 19Kg price: ${fmt(d.gradePrices[19])} MMK`,
+              `   4.3 20Kg price: ${fmt(d.gradePrices[20])} MMK`,
+              `   4.4 21 Kg price: ${fmt(d.gradePrices[21])} MMK`
+            ];
+
+            if (d.hasValidCustom) {
+              lines.push(`   4.5 Other size (${d.customKg}Kg): ${fmt(d.customPrice)} MMK`);
+            }
+
+            const text = lines.join('\n');
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.setAttribute('readonly', '');
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+
+            let copied = false;
+            try {
+              copied = document.execCommand('copy');
+            } catch (err) {
+              copied = false;
+            }
+            document.body.removeChild(textarea);
+
+            if (copied) {
+              copyBtn.classList.add('copied');
+              if (copyBtnText) copyBtnText.textContent = 'Copied!';
+              showToast('Copied!');
+              setTimeout(() => {
+                copyBtn.classList.remove('copied');
+                if (copyBtnText) copyBtnText.textContent = 'Copy Summary';
+              }, 2000);
+            } else {
+              showToast('Copy failed');
+            }
+          });
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        bindEvents();
+        updateAll();
+      });
+
+      if (document.readyState !== 'loading') {
+        bindEvents();
+        updateAll();
+      }
+    })();
+  </script>
+</body>
+</html>
